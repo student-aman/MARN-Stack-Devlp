@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 antialiased text-gray-900 font-[Poppins,sans-serif]">
+    <%- include('partials/header', { currentUser: null }) %>
+
+    <main class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden md:flex">
+
+                <!-- Left Side: Value Proposition / Benefits -->
+                <div class="w-full md:w-2/5 bg-gradient-to-br from-purple-600 to-indigo-600 p-8 md:p-12 text-white flex flex-col justify-center">
+                    <div>
+                        <i class="fas fa-rocket text-5xl text-indigo-200 mb-4"></i>
+                        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Apne Business ko Badhayein</h2>
+                        <p class="text-indigo-100 mb-8 leading-relaxed">
+                            Hamare platform se judkar hazaron naye grahakon tak pahunchein aur apni services ko ek nayi udaan dein.
+                        </p>
+                        <ul class="space-y-5">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle w-6 mt-1 text-green-300"></i>
+                                <span class="ml-3">Hazaaron grahakon tak pahunch</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle w-6 mt-1 text-green-300"></i>
+                                <span class="ml-3">Aasan aur surakshit payment system</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle w-6 mt-1 text-green-300"></i>
+                                <span class="ml-3">Apni online profile manage karein</span>
+                            </li>
+                             <li class="flex items-start">
+                                <i class="fas fa-check-circle w-6 mt-1 text-green-300"></i>
+                                <span class="ml-3">24/7 Vendor Support</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Right Side: Registration Form -->
+                <div class="w-full md:w-3/5 p-8 md:p-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Vendor Ke Roop Mein Register Karein</h2>
+                    <p class="text-gray-600 mb-8">Bas kuch aasan steps mein shuruaat karein.</p>
+
+                    <!-- Success/Error Messages -->
+                    <% if (successMessage) { %>
+                        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md mb-6" role="alert">
+                            <p class="font-bold">सफलता!</p>
+                            <p><%= successMessage %></p>
+                        </div>
+                    <% } %>
+                    <% if (errorMessage) { %>
+                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mb-6" role="alert">
+                            <p class="font-bold">त्रुटि!</p>
+                            <p><%= errorMessage %></p>
+                        </div>
+                    <% } %>
+
+                    <form action="/vendor/register" method="POST" class="space-y-6">
+                        <!-- Grid for Name Fields -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Company Name -->
+                            <div>
+                                <label for="companyName" class="font-medium text-gray-700">Company/person name <span class="text-red-500">*</span></label>
+                                <div class="relative mt-2">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="fas fa-building text-gray-400"></i></span>
+                                    <input type="text" id="companyName" name="companyName" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-600 transition" placeholder="Aapki company ka naam" value="<%= typeof formData !== 'undefined' ? formData.companyName : '' %>" required>
+                                </div>
+                            </div>
+                            <!-- Contact Person -->
+                            <div>
+                                <label for="contactPerson" class="font-medium text-gray-700">Contact Person <span class="text-red-500">*</span></label>
+                                <div class="relative mt-2">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="fas fa-user text-gray-400"></i></span>
+                                    <input type="text" id="contactPerson" name="contactPerson" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-600 transition" placeholder="Mukhya vyakti ka naam" value="<%= typeof formData !== 'undefined' ? formData.contactPerson : '' %>" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid for Contact Info -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
+                                <div class="relative mt-2">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="fas fa-envelope text-gray-400"></i></span>
+                                    <input type="email" id="email" name="email" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-600 transition" placeholder="business.email@example.com" value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" required>
+                                </div>
+                            </div>
+                            <!-- Phone -->
+                            <div>
+                                <label for="phone" class="font-medium text-gray-700">Phone <span class="text-red-500">*</span></label>
+                                <div class="relative mt-2">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="fas fa-phone text-gray-400"></i></span>
+                                    <input type="tel" id="phone" name="phone" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-600 transition" placeholder="+91-9876543210" value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Category -->
+                        <div>
+                            <label for="serviceCategory" class="font-medium text-gray-700">Main Service Category <span class="text-red-500">*</span></label>
+                            <div class="relative mt-2">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3"><i class="fas fa-concierge-bell text-gray-400"></i></span>
+                                <select id="serviceCategory" name="serviceCategory" class="w-full pl-10 p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-600 transition appearance-none" required>
+                                    <option value="">Select a category...</option>
+                                    <option value="Home Services" <%= typeof formData !== 'undefined' && formData.serviceCategory === 'Home Services' ? 'selected' : '' %>>Home Services</option>
+                                    <option value="IT & Tech" <%= typeof formData !== 'undefined' && formData.serviceCategory === 'IT & Tech' ? 'selected' : '' %>>IT & Tech</option>
+                                    <option value="Design & Creative" <%= typeof formData !== 'undefined' && formData.serviceCategory === 'Design & Creative' ? 'selected' : '' %>>Design & Creative</option>
+                                    <option value="Events & Parties" <%= typeof formData !== 'undefined' && formData.serviceCategory === 'Events & Parties' ? 'selected' : '' %>>Events & Parties</option>
+                                    <option value="Other" <%= typeof formData !== 'undefined' && formData.serviceCategory === 'Other' ? 'selected' : '' %>>Other</option>
+                                </select>
+                                <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+                                    <i class="fas fa-chevron-down"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Service Description -->
+                        <div>
+                            <label for="description" class="font-medium text-gray-700">Service Description (Optional)</label>
+                            <div class="relative mt-2">
+                                <span class="absolute top-0 left-0 flex items-start pt-3 pl-3"><i class="fas fa-pencil-alt text-gray-400"></i></span>
+                                <textarea id="description" name="description" rows="4" class="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-600 transition" placeholder="Yahan apni services aur anubhav ke baare mein batayein..."><%= typeof formData !== 'undefined' ? formData.description : '' %></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center text-lg">
+                            <i class="fas fa-user-plus mr-3"></i> Abhi Register Karein
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

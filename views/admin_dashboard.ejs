@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .dashboard-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-100 font-sans antialiased text-gray-800">
+    <%- include('partials/header', { currentUser: currentUser }) %>
+
+    <main class="container mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-6xl mx-auto bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-center text-blue-800 mb-10 flex items-center justify-center">
+                <i class="fas fa-screwdriver-wrench mr-4 text-blue-600"></i> Admin Dashboard
+            </h1>
+            <p class="text-lg text-center text-gray-600 mb-12">
+                Manage various aspects of the website from here.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Users Management Card -->
+                <a href="/admin/users" class="dashboard-card bg-purple-50 text-purple-800 p-8 rounded-lg text-center flex flex-col items-center justify-center">
+                    <i class="fas fa-users text-6xl mb-4 text-purple-600"></i>
+                    <h2 class="text-2xl font-bold mb-2">Manage Users</h2>
+                    <p class="text-gray-700">View and manage all registered users.</p>
+                </a>
+
+                <!-- Services Management Card -->
+                <a href="/admin/services" class="dashboard-card bg-green-50 text-green-800 p-8 rounded-lg text-center flex flex-col items-center justify-center">
+                    <i class="fas fa-wrench text-6xl mb-4 text-green-600"></i>
+                    <h2 class="text-2xl font-bold mb-2">Manage Services</h2>
+                    <p class="text-gray-700">View and update services listed on the website.</p>
+                </a>
+
+                <!-- Bookings Management Card -->
+                <a href="/admin/bookings" class="dashboard-card bg-red-50 text-red-800 p-8 rounded-lg text-center flex flex-col items-center justify-center">
+                    <i class="fas fa-calendar-alt text-6xl mb-4 text-red-600"></i>
+                    <h2 class="text-2xl font-bold mb-2">Manage Bookings</h2>
+                    <p class="text-gray-700">View all customer service bookings.</p>
+                </a>
+
+                <!-- Contact Messages Management Card -->
+                <a href="/admin/contact-messages" class="dashboard-card bg-yellow-50 text-yellow-800 p-8 rounded-lg text-center flex flex-col items-center justify-center">
+                    <i class="fas fa-envelope-open-text text-6xl mb-4 text-yellow-600"></i>
+                    <h2 class="text-2xl font-bold mb-2">Manage Messages</h2>
+                    <p class="text-gray-700">View all customer contact messages.</p>
+                </a>
+
+                <!-- Vendors Management Card -->
+                <a href="/admin/vendors" class="dashboard-card bg-indigo-50 text-indigo-800 p-8 rounded-lg text-center flex flex-col items-center justify-center">
+                    <i class="fas fa-handshake text-6xl mb-4 text-indigo-600"></i>
+                    <h2 class="text-2xl font-bold mb-2">Manage Vendors</h2>
+                    <p class="text-gray-700">View and approve registered vendors.</p>
+                </a>
+
+                <!-- Settings/Reports (Example for future expansion) -->
+                <a href="/admin/settings" class="dashboard-card bg-gray-50 text-gray-800 p-8 rounded-lg text-center flex flex-col items-center justify-center opacity-70 cursor-not-allowed">
+                    <i class="fas fa-cogs text-6xl mb-4 text-gray-600"></i>
+                    <h2 class="text-2xl font-bold mb-2">Settings & Reports</h2>
+                    <p class="text-gray-700">Website settings and analytics (coming soon).</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

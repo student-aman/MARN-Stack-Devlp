@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .detail-card {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .detail-item i {
+            margin-right: 0.75rem;
+            color: #10B981; /* teal-500 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-yellow-100 font-sans antialiased text-gray-800">
+    <%- include('partials/header', { currentUser: currentUser }) %>
+
+    <main class="container mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-3xl mx-auto bg-white p-8 md:p-10 rounded-2xl detail-card border border-blue-100 transform transition-all duration-300 hover:shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-center text-yellow-700 mb-8 flex items-center justify-center">
+                <i class="fas fa-envelope-open-text mr-4 text-yellow-500"></i> View Message
+            </h1>
+            <p class="text-lg text-center text-gray-600 mb-8">
+                Message sent by the customer.
+            </p>
+
+            <% if (errorMessage) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><%= errorMessage %></span>
+                </div>
+            <% } %>
+            <% if (successMessage) { %>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                    <strong class="font-bold">Success!</strong>
+                    <span class="block sm:inline"><%= successMessage %></span>
+                </div>
+            <% } %>
+
+            <div class="space-y-6 text-lg text-gray-700 bg-gray-50 p-6 rounded-lg border border-gray-200">
+                <div class="detail-item">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                    <p><strong class="font-semibold">Sender Name:</strong> <%= contactMessage.fullName %></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-envelope text-2xl"></i>
+                    <p><strong class="font-semibold">Email:</strong> <%= contactMessage.email %></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-tag text-2xl"></i>
+                    <p><strong class="font-semibold">Subject:</strong> <%= contactMessage.subject %></p>
+                </div>
+                <div class="detail-item items-start">
+                    <i class="fas fa-comment-dots text-2xl mt-1"></i>
+                    <div>
+                        <strong class="font-semibold block mb-2">Message:</strong>
+                        <p class="bg-white p-4 rounded-lg border border-gray-200 leading-relaxed"><%= contactMessage.message %></p>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock text-2xl"></i>
+                    <p><strong class="font-semibold">Sent At:</strong> <%= new Date(contactMessage.submittedAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="/admin/contact-messages" class="inline-block bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-full hover:bg-gray-300 transition-colors flex items-center justify-center">
+                    <i class="fas fa-arrow-left mr-2"></i> All Messages
+                </a>
+                <form action="/admin/contact-messages/delete/<%= contactMessage._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this message? This action cannot be undone!');" class="inline-block">
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full shadow-md hover:shadow-lg transition-colors flex items-center justify-center">
+                        <i class="fas fa-trash-alt mr-2"></i> Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .form-card {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.45), 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border-color: #3B82F6;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 font-sans antialiased text-gray-800">
+    <%- include('partials/header', { currentUser: currentUser }) %>
+
+    <main class="container mx-auto px-4 py-12 md:py-16">
+        <div class="max-w-3xl mx-auto bg-white p-8 md:p-10 rounded-2xl form-card border border-blue-100 transform transition-all duration-300 hover:shadow-2xl">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-center text-indigo-700 mb-8 flex items-center justify-center">
+                <i class="fas fa-handshake mr-4 text-indigo-500"></i> Edit Vendor
+            </h1>
+            <p class="text-lg text-center text-gray-600 mb-8">
+                Update vendor information.
+            </p>
+
+            <% if (errorMessage) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><%= errorMessage %></span>
+                </div>
+            <% } %>
+            <% if (successMessage) { %>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                    <strong class="font-bold">Success!</strong>
+                    <span class="block sm:inline"><%= successMessage %></span>
+                </div>
+            <% } %>
+
+            <form action="/admin/vendors/edit/<%= vendor._id %>?_method=PUT" method="POST" class="space-y-6">
+                <div>
+                    <label for="companyName" class="block text-md font-medium text-gray-700 mb-2">Company / Individual Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="companyName" name="companyName" class="w-full p-3 border border-gray-300 rounded-lg" value="<%= vendor.companyName %>" required>
+                </div>
+                <div>
+                    <label for="contactPerson" class="block text-md font-medium text-gray-700 mb-2">Contact Person Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="contactPerson" name="contactPerson" class="w-full p-3 border border-gray-300 rounded-lg" value="<%= vendor.contactPerson %>" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-md font-medium text-gray-700 mb-2">Email Address <span class="text-red-500">*</span></label>
+                    <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg" value="<%= vendor.email %>" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-md font-medium text-gray-700 mb-2">Phone Number <span class="text-red-500">*</span></label>
+                    <input type="tel" id="phone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg" value="<%= vendor.phone %>" required>
+                </div>
+                <div>
+                    <label for="serviceCategory" class="block text-md font-medium text-gray-700 mb-2">Main Service Category <span class="text-red-500">*</span></label>
+                    <select id="serviceCategory" name="serviceCategory" class="w-full p-3 border border-gray-300 rounded-lg bg-white" required>
+                        <option value="Home Services" <%= vendor.serviceCategory === 'Home Services' ? 'selected' : '' %>>Home Services</option>
+                        <option value="IT & Tech" <%= vendor.serviceCategory === 'IT & Tech' ? 'selected' : '' %>>IT & Tech</option>
+                        <option value="Design & Creative" <%= vendor.serviceCategory === 'Design & Creative' ? 'selected' : '' %>>Design & Creative</option>
+                        <option value="Events & Parties" <%= vendor.serviceCategory === 'Events & Parties' ? 'selected' : '' %>>Events & Parties</option>
+                        <option value="Other" <%= vendor.serviceCategory === 'Other' ? 'selected' : '' %>>Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="description" class="block text-md font-medium text-gray-700 mb-2">Brief Description of Your Service (Optional)</label>
+                    <textarea id="description" name="description" rows="5" class="w-full p-3 border border-gray-300 rounded-lg"><%= vendor.description %></textarea>
+                </div>
+                <div>
+                    <label for="status" class="block text-md font-medium text-gray-700 mb-2">Status <span class="text-red-500">*</span></label>
+                    <select id="status" name="status" class="w-full p-3 border border-gray-300 rounded-lg bg-white" required>
+                        <option value="Pending Review" <%= vendor.status === 'Pending Review' ? 'selected' : '' %>>Pending Review</option>
+                        <option value="Approved" <%= vendor.status === 'Approved' ? 'selected' : '' %>>Approved</option>
+                        <option value="Rejected" <%= vendor.status === 'Rejected' ? 'selected' : '' %>>Rejected</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 text-white font-bold py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-102 flex items-center justify-center text-xl">
+                    <i class="fas fa-save mr-3"></i> Update
+                </button>
+            </form>
+
+            <div class="mt-8 text-center">
+                <a href="/admin/vendors" class="inline-block bg-gray-200 text-gray-700 font-bold py-2 px-6 rounded-full hover:bg-gray-300 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Vendors
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

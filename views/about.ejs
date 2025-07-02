@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-100 font-sans antialiased text-gray-800">
+    <%- include('partials/header') %>
+
+    <main>
+        <!-- Hero Section for About Us -->
+        <section class="relative flex items-center justify-center text-center text-white h-[50vh] shadow-inner" style="background-image: url('https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-4">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight drop-shadow-lg">SkillHub: Your Destination for Every Skill</h1>
+                <p class="text-xl md:text-2xl font-medium drop-shadow-md">Learn about us and how we make your life easier.</p>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-12 md:py-16">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-8 md:p-10 shadow-lg border border-blue-100 rounded-3xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6">Our Mission</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        At SkillHub, our mission is to connect people with the best and most trusted service providers around them. We aim to create a platform where you can find the right skill for every need, whether it's home repairs, digital work, or planning a special event.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Our goal is to make it easy for customers to find and book services, and to give service providers a chance to showcase their talent and reach new customers.
+                    </p>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.pexels.com/photos/3153204/pexels-photo-3153204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Man creating a presentation on laptop" class="w-full h-80 object-cover rounded-xl">
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-12 md:py-16 bg-blue-50 rounded-3xl shadow-inner">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-6">Our Vision and Values</h2>
+                <p class="text-xl text-gray-700 leading-relaxed mb-10">
+                    We imagine a future where everyone can get the best service for their needs, without any hassle.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-blue-100 flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                        <i class="fas fa-handshake text-5xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Trustworthiness</h3>
+                        <p class="text-md text-gray-600">We put honesty and trust above all in every transaction.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-blue-100 flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                        <i class="fas fa-lightbulb text-5xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Innovation</h3>
+                        <p class="text-md text-gray-600">We always look for new and better ways to make services easier.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-blue-100 flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                        <i class="fas fa-users text-5xl text-blue-600 mb-4"></i>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Customer Satisfaction</h3>
+                        <p class="text-md text-gray-600">Your satisfaction is our top priority.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-12 md:py-16">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="rounded-xl overflow-hidden shadow-lg order-2 lg:order-1">
+                    <img src="https://images.pexels.com/photos/8761310/pexels-photo-8761310.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Professional Event Planning" class="w-full h-80 object-cover rounded-xl">
+                </div>
+                <div class="bg-white p-8 md:p-10 shadow-lg border border-blue-100 rounded-3xl order-1 lg:order-2 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6">For Customers</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        SkillHub helps you find the right service provider for your needs. On our platform, you get:
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li><strong class="text-blue-600">Vast Selection:</strong> All kinds of services in one place.</li>
+                        <li><strong class="text-blue-600">Verified Professionals:</strong> Every service provider is thoroughly checked.</li>
+                        <li><strong class="text-blue-600">Transparent Pricing:</strong> No hidden charges, everything is clear.</li>
+                        <li><strong class="text-blue-600">Easy Booking:</strong> Book services in just a few clicks.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-12 md:py-16 bg-blue-50 rounded-3xl shadow-inner">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-8 md:p-10 shadow-lg border border-blue-100 rounded-3xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl">
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-6">For Vendors</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        If you are a skilled professional looking to reach new customers, SkillHub is the right place for you. We give you the opportunity to:
+                    </p>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li><strong class="text-blue-600">New Customers:</strong> Expand your reach.</li>
+                        <li><strong class="text-blue-600">Showcase Your Skills:</strong> Build a portfolio of your work.</li>
+                        <li><strong class="text-blue-600">Flexible Work:</strong> Work according to your own schedule.</li>
+                        <li><strong class="text-blue-600">Secure Payments:</strong> Get paid on time and securely.</li>
+                    </ul>
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-lg">
+                    <img src="https://images.pexels.com/photos/12903285/pexels-photo-12903285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Business people working in an office" class="w-full h-80 object-cover rounded-xl">
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-12 md:py-16 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-6">Why Choose Us?</h2>
+            <p class="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto mb-10">
+                SkillHub is not just a platform, but a community where quality and professionalism are given the highest importance. We are committed to providing you with better services and better opportunities.
+            </p>
+            <a href="/contact" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                Contact Us
+            </a>
+        </section>
+
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-100 font-sans antialiased text-gray-800">
+    <%- include('partials/header') %>
+
+    <main>
+        <section class="relative flex items-center justify-center text-center text-white h-[70vh] bg-cover bg-center shadow-inner" style="background-image: url('https://images.pexels.com/photos/3184435/pexels-photo-3184435.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10 max-w-4xl mx-auto px-4">
+                <h1 class="text-3xl md:text-4xl font-extrabold mb-4 leading-tight drop-shadow-lg">Aapki Har Zarurat Ke Liye, Ek Perfect Skill.</h1>
+                <p class="text-xl md:text-2xl mb-8 drop-shadow-md">Plumbers, Electricians se lekar Web Developers tak, paayein apne sheher ke best service providers.</p>
+                
+                <form action="/search-results" method="GET" class="relative flex items-center bg-white rounded-full px-2 py-1 shadow-lg backdrop-blur-sm w-full max-w-xl mx-auto">
+                    <input
+                        type="text"
+                        id="search-input"
+                        name="query"
+                        placeholder="Search..."
+                        class="flex-grow px-5 py-3 bg-transparent text-lg text-gray-800 rounded-full outline-none"
+                        autocomplete="off"
+                    >
+                    <input type="hidden" name="location" value="ludhiana">
+                    <button type="submit" class="flex-shrink-0 w-14 h-14 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white text-2xl transition-all duration-200">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <!-- Suggestions Container -->
+                    <div id="suggestions-list" class="absolute left-0 top-full mt-1 w-full max-h-52 overflow-y-auto bg-white border border-gray-200 rounded-b-xl shadow-lg z-20 hidden"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="py-12 md:py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">Popular Services</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <% if (popularServices && popularServices.length > 0) { %>
+                        <% popularServices.forEach(service => { %>
+                            <a href="/service/<%= service.id %>" class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
+                                <img src="<%= service.imageUrl || 'https://placehold.co/600x400/CCCCCC/000000?text=Service' %>" alt="<%= service.title %>" class="w-full h-48 object-cover rounded-t-xl">
+                                <div class="p-5 flex flex-col h-full">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2 truncate"><%= service.title %></h3>
+                                    <p class="text-sm text-gray-600 mb-3 line-clamp-2"><%= service.description %></p>
+                                    <div class="flex items-center text-gray-700 mb-2">
+                                        <i class="fas fa-user-circle mr-2 text-blue-500"></i>
+                                        <span class="text-sm font-medium"><%= service.vendorName %></span>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                                        <span class="text-lg font-bold text-blue-700">₹<%= service.price %></span>
+                                        <div class="flex items-center">
+                                            <% 
+                                                const rating = service.rating || 0;
+                                                for (let i = 1; i <= 5; i++) {
+                                                    if (i <= Math.floor(rating)) {
+                                            %>
+                                                        <i class="fas fa-star text-yellow-400"></i>
+                                            <%      } else if (i - 0.5 === rating) { %>
+                                                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                                            <%      } else { %>
+                                                        <i class="far fa-star text-gray-300"></i>
+                                            <%      }
+                                                }
+                                            %>
+                                            <span class="text-sm text-gray-600 ml-1">(<%= service.reviewsCount || 0 %>)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="col-span-full text-center text-gray-600">No popular services found.</div>
+                    <% } %>
+                </div>
+                <div class="text-center mt-10">
+                    <a href="/services" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                        View All Services
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const suggestionsList = document.getElementById('suggestions-list');
+        let debounceTimeout;
+
+        // Function to fetch and display suggestions
+        async function fetchSuggestions(query) {
+            if (query.length < 2) {
+                suggestionsList.innerHTML = '';
+                suggestionsList.classList.add('hidden');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/search-suggestions?q=${encodeURIComponent(query)}`);
+                const suggestions = await response.json();
+
+                suggestionsList.innerHTML = '';
+                if (suggestions.length > 0) {
+                    suggestions.forEach(suggestion => {
+                        const div = document.createElement('div');
+                        div.className = "px-4 py-3 cursor-pointer text-gray-700 hover:bg-blue-50 transition";
+                        div.textContent = suggestion;
+                        div.addEventListener('click', () => {
+                            searchInput.value = suggestion;
+                            suggestionsList.classList.add('hidden');
+                            searchInput.closest('form').submit();
+                        });
+                        suggestionsList.appendChild(div);
+                    });
+                    suggestionsList.classList.remove('hidden');
+                } else {
+                    suggestionsList.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error fetching search suggestions:', error);
+                suggestionsList.classList.add('hidden');
+            }
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(() => {
+                    fetchSuggestions(searchInput.value);
+                }, 300);
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+                    suggestionsList.classList.add('hidden');
+                }
+            });
+
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.length >= 2 && suggestionsList.children.length > 0) {
+                    suggestionsList.classList.remove('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

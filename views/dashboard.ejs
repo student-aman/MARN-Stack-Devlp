@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-100 font-sans antialiased text-gray-800">
+    <%- include('partials/header') %>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-center text-blue-800 mb-8 md:mb-12">
+            Namaste, <%= user.name %>!
+        </h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Quick Link: My Profile -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col items-center justify-center text-center">
+                <i class="fas fa-user-circle text-5xl text-blue-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Mera Profile</h3>
+                <p class="text-gray-600 text-sm mb-4">Apni personal details dekhein aur edit karein.</p>
+                <a href="/profile" class="text-blue-600 hover:underline font-medium">Profile Dekhein</a>
+            </div>
+
+            <!-- Quick Link: Book New Service -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col items-center justify-center text-center">
+                <i class="fas fa-plus-circle text-5xl text-green-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Nayi Service Book Karein</h3>
+                <p class="text-gray-600 text-sm mb-4">Humari services browse karein aur apni zaroorat poori karein.</p>
+                <a href="/services" class="text-green-600 hover:underline font-medium">Services Dekhein</a>
+            </div>
+
+            <!-- Quick Link: Contact Support -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:shadow-2xl flex flex-col items-center justify-center text-center">
+                <i class="fas fa-headset text-5xl text-purple-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Support Se Sampark Karein</h3>
+                <p class="text-gray-600 text-sm mb-4">Kisi bhi sawaal ya madad ke liye humse judiye.</p>
+                <a href="/contact" class="text-purple-600 hover:underline font-medium">Sampark Karein</a>
+            </div>
+        </div>
+
+        <!-- My Bookings Section - Now in a table format -->
+        <section class="bg-white p-8 md:p-10 rounded-2xl shadow-lg mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center md:text-left">Meri Bookings</h2>
+            <% if (bookings && bookings.length > 0) { %>
+                <div class="overflow-x-auto rounded-lg shadow-md">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr class="bg-gray-700 text-white">
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                    Service Title
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                    Vendor
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                    Date
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                    Message
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <% bookings.forEach((booking, index) => { %>
+                                <tr class="transition hover:bg-gray-100 hover:-translate-y-0.5 hover:shadow-md <%= index % 2 === 0 ? '' : 'bg-gray-50' %>">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-700">
+                                        <%= booking.serviceTitle %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                        <%= booking.vendorName %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        <%= new Date(booking.preferredDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) %>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600 max-w-xs truncate">
+                                        <%= booking.message.substring(0, 70) %><% if (booking.message.length > 70) { %>...<% } %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold
+                                        <%= booking.status === 'Pending' ? 'text-amber-500' : '' %>
+                                        <%= booking.status === 'Confirmed' ? 'text-green-500' : '' %>
+                                        <%= booking.status === 'Completed' ? 'text-gray-500' : '' %>
+                                        <%= booking.status === 'Cancelled' ? 'text-red-500' : '' %>
+                                    ">
+                                        <%= booking.status %>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } else { %>
+                <p class="text-center text-gray-600 py-4">Aapne abhi tak koi service book nahi ki hai.</p>
+                <div class="text-center mt-4">
+                    <a href="/services" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-all duration-300">
+                        Nayi Service Book Karein
+                    </a>
+                </div>
+            <% } %>
+        </section>
+
+        <!-- Placeholder for future sections, e.g., "My Reviews", "Notifications" -->
+        <section class="bg-white p-8 md:p-10 rounded-2xl shadow-lg text-center text-gray-600">
+            <h3 class="text-2xl font-semibold mb-4">Aur Bhi Bahut Kuch Aane Wala Hai!</h3>
+            <p>Jald hi aap yahan apni reviews, notifications aur bahut kuch dekh paayenge.</p>
+        </section>
+
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

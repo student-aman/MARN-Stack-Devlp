@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+<body class="bg-gray-100 font-sans antialiased">
+    <%- include('partials/header', { currentUser: currentUser }) %>
+
+    <main class="container mx-auto px-4 py-16 text-center">
+        <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+            <i class="fas fa-exclamation-triangle text-6xl text-yellow-500 mb-6"></i>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
+                Oops! <%= title %>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">
+                The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+            </p>
+            <a href="/" class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                <i class="fas fa-home mr-2"></i> Go to Homepage
+            </a>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

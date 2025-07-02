@@ -1,0 +1,79 @@
+<header class="bg-blue-800 text-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-2xl font-bold">
+            <a href="/" class="hover:text-blue-200 transition-colors duration-200">SkillHub</a>
+        </div>
+        <nav class="hidden md:flex space-x-6 items-center">
+            <a href="/" class="hover:text-blue-200 transition-colors duration-200">Home</a>
+            <a href="/services" class="hover:text-blue-200 transition-colors duration-200">Services</a>
+            <a href="/about" class="hover:text-blue-200 transition-colors duration-200">About Us</a>
+            <a href="/contact" class="hover:text-blue-200 transition-colors duration-200">Contact</a>
+            <a href="/vendor/register" class="hover:text-blue-200 transition-colors duration-200">For Vendors</a>
+            
+            <% if (currentUser) { %>
+                <% if (currentUser.role === 'admin') { %>
+                    <!-- Admin is logged in -->
+                    <a href="/admin" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Admin Dashboard</a>
+                <% } else { %>
+                    <!-- Normal user is logged in -->
+                    <a href="/dashboard" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Dashboard</a>
+                    <!-- Admin Login button for regular users, if they need to access admin panel -->
+                    <a href="/admin/login" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Admin Login</a>
+                <% } %>
+                <form action="/logout" method="POST" class="inline-block">
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Logout</button>
+                </form>
+            <% } else { %>
+                <!-- No user is logged in -->
+                <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Login</a>
+                <a href="/register" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Sign Up</a>
+                <!-- Admin Login button for non-logged-in users -->
+                <a href="/admin/login" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Admin Login</a>
+            <% } %>
+        </nav>
+        <!-- Mobile menu button (Hamburger icon) -->
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-white focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div id="mobile-menu" class="md:hidden bg-blue-700 px-4 pt-2 pb-4 space-y-2 hidden">
+        <a href="/" class="block text-white hover:text-blue-200 py-2">Home</a>
+        <a href="/services" class="block text-white hover:text-blue-200 py-2">Services</a>
+        <a href="/about" class="block text-white hover:text-blue-200 py-2">About Us</a>
+        <a href="/contact" class="block text-white hover:text-blue-200 py-2">Contact</a>
+        <a href="/vendor/register" class="block text-white hover:text-blue-200 py-2">For Vendors</a>
+        <% if (currentUser) { %>
+            <% if (currentUser.role === 'admin') { %>
+                <a href="/admin" class="block text-white hover:text-blue-200 py-2 bg-indigo-600 px-3 rounded-full text-center">Admin Dashboard</a>
+            <% } else { %>
+                <a href="/dashboard" class="block text-white hover:text-blue-200 py-2 bg-green-600 px-3 rounded-full text-center">Dashboard</a>
+                <a href="/admin/login" class="block text-white hover:text-blue-200 py-2 bg-indigo-600 px-3 rounded-full text-center">Admin Login</a>
+            <% } %>
+            <form action="/logout" method="POST" class="block">
+                <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200 shadow-md">Logout</button>
+            </form>
+        <% } else { %>
+            <a href="/login" class="block text-white hover:text-blue-200 py-2 bg-blue-600 px-3 rounded-full text-center">Login</a>
+            <a href="/register" class="block text-white hover:text-blue-200 py-2 bg-blue-600 px-3 rounded-full text-center">Sign Up</a>
+            <a href="/admin/login" class="block text-white hover:text-blue-200 py-2 bg-indigo-600 px-3 rounded-full text-center">Admin Login</a>
+        <% } %>
+    </div>
+</header>
+
+<!-- JavaScript for Mobile Menu Toggle -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
